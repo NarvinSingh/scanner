@@ -1,0 +1,31 @@
+.redacted {
+  background-color: #CCC;
+  color: #CCC;
+}
+
+body {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60em;
+  background-color: #DDD;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+label.input {
+  float: left;
+  width: 6em;
+}
+
+input.input {
+  display: block;
+}
+
+a.input {
+  display: block;
+  overflow: hidden;
+  max-width: 54em;
+}
