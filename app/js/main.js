@@ -1,42 +1,42 @@
 (function () {
-  var clientID = "NARVIN@AMER.OAUTHAP";
+  var clientID = "NASAPP@AMER.OAUTHAP";
   var redirectURI = "http://localhost";
-  var authCode;
+  var authCode = "";
   var inputClientID;
   var inputRedirectURI;
-  var anchorAuthCodeURI;
   var inputAuthCode;
+  var buttonGetAuthCode;
   var buttonGetToken;
   var buttonRefreshToken;
-  var buttonGetOptionChain;
+  var buttonScan;
   var responseGetToken;
   var responseRefreshToken;
   var responseGetOptionChain;
 
   function init() {
-    inputClientID = document.getElementsByName("clientID")[0];
+    inputClientID = document.getElementById("clientIDInput");
     inputClientID.value = clientID;
     inputClientID.addEventListener("input", processInputClientIDInput);
 
-    inputRedirectURI = document.getElementsByName("redirectURI")[0];
+    inputRedirectURI = document.getElementById("redirectURIInput");
     inputRedirectURI.value = redirectURI;
     inputRedirectURI.addEventListener("input", processInputRedirectURIInput);
 
-    anchorAuthCodeURI = document.getElementsByName("authCodeURI")[0];
-    updateAnchorAuthCodeURI();
-
-    inputAuthCode = document.getElementsByName("authCode")[0];
+    inputAuthCode = document.getElementById("authCodeInput");
     inputAuthCode.value = authCode;
     inputAuthCode.addEventListener("input", processInputAuthCodeInput);
 
-    buttonGetToken = document.getElementsByName("getToken")[0];
+    buttonGetAuthCode = document.getElementById("getAuthCodeButton");
+    buttonGetAuthCode.addEventListener("click", processButtonGetAuthCodeClick);
+
+    buttonGetToken = document.getElementById("getTokenButton");
     buttonGetToken.addEventListener("click", processButtonGetTokenClick);
 
-    buttonRefreshToken = document.getElementsByName("refreshToken")[0];
+    buttonRefreshToken = document.getElementById("refreshTokenButton");
     buttonRefreshToken.addEventListener("click", processButtonRefreshTokenClick);
 
-    buttonGetOptionChain = document.getElementsByName("getOptionChain")[0];
-    buttonGetOptionChain.addEventListener("click", processButtonGetOptionChainClick);
+    buttonScan = document.getElementById("getOptionChainButton");
+    buttonScan.addEventListener("click", processButtonScanClick);
   }
 
   function getAuthCodeURI() {
@@ -44,12 +44,6 @@
       "response_type=code" +
       "&redirect_uri=" + encodeURIComponent(redirectURI) + 
       "&client_id=" + encodeURIComponent(clientID);
-  }
-
-  function updateAnchorAuthCodeURI() {
-    var authCodeURI = getAuthCodeURI();
-    anchorAuthCodeURI.href = authCodeURI;
-    anchorAuthCodeURI.innerHTML = authCodeURI;
   }
 
   function getToken() {
@@ -106,6 +100,10 @@
     authCode = decodeURIComponent(this.value);
   }
 
+  function processButtonGetAuthCodeClick() {
+    window.open(getAuthCodeURI());
+  }
+
   function processButtonGetTokenClick() {
     getToken();
   }
@@ -114,7 +112,7 @@
     refreshToken();
   }
 
-  function processButtonGetOptionChainClick() {
+  function processButtonScanClick() {
     getOptionChain('SPY', '2019-06-20', '2019-06-22');
   }
 

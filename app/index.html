@@ -4,20 +4,71 @@
   <meta charset="UTF-8">
   <title>Scanner</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
-  <script src="js/main.js"></script>
-</head>
+<!--   <script src="js/main.js"></script>
+ --></head>
 <body>
-  <h1 class="redacted">Scanner</h1>
-  <label class="input" for="clientID">Client ID</label>
-  <input class="input redacted" type="text" name="clientID" />
-  <label class="input" for="redirectURI">Redirect URI</label>
-  <input class="input redacted" type="text" name="redirectURI" />
-  <label class="input" for="authCodeURI">Auth Code URI</label>
-  <a class="input redacted" name="authCodeURI" href="#" target="_blank"></a>
-  <label class="input" for="authCode">Auth Code</label>
-  <input class="input redacted" type="text" name="authCode" />
-  <button name="getToken">Get Token</button>
-  <button name="refreshToken">Refresh Token</button>
-  <button name="getOptionChain">Get Option Chain</button>
-</body>
+  <h1 id="header" class="redacted">Scanner</h1>
+  <section id="authorizationSection">
+    <h1 id="authorizationHeader">Authorization</h1>
+    <label id="clientIDLabel" for="clientID">Client ID</label>
+    <input id="clientIDInput" class="redacted" type="text" name="clientID" />
+    <label id="redirectURILabel" for="redirectURI">Redirect URI</label>
+    <input id="redirectURIInput" class="redacted" type="text" name="redirectURI" />
+    <label id="authCodeLabel" for="authCode">Auth Code</label>
+    <input id="authCodeInput" type="text" name="authCode" />
+    <button id="getAuthCodeButton" name="getAuthCode">Get Auth Code</button>
+    <button id="getTokenButton" name="getToken">Get Token</button>
+    <button id="refreshTokenButton" name="refreshToken">Refresh Token</button>
+  </section>
+  <section id="scanSection">
+    <h1 id="scanHeader">Scan</h1>   
+    <button id="scanButton" name="scan">Scan</button>
+  </section>
+<!--    <style>
+    #s {
+      display: grid;
+      width: 400px;
+      grid-template:
+        "h h"
+        "l1 i1"
+        "l2 i2"
+        / 10em auto;
+      grid-gap: 10px 20px;
+      background-color: yellow;
+    }
+
+    #h {
+      grid-area: h;
+      margin: 0;
+      background-color: blue;
+    }
+
+    #l1 {
+      grid-area: l1;
+      background-color: blue;
+    }
+
+    #i1 {
+      grid-area: i1;
+      background-color: blue;
+    }
+
+    #l2 {
+      grid-area: l2;
+      background-color: blue;
+    }
+
+    #i2 {
+      grid-area: i2;
+      background-color: blue;
+    }
+   </style>
+   <section id="s">
+     <h1 id="h">Title</h1>
+     <label id="l1">Label</label>
+     <input id="i1" value="input1" />
+     <label id="l2">Label</label>
+     <input id="i2" value="input2" />
+   </section> -->
+ </body>
 </html>
