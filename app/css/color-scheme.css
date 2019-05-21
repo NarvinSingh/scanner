@@ -1,0 +1,33 @@
+.redacted {
+/*  background-color: #CCC;
+  color: #CCC;
+*/}
+
+body {
+  color: #333;
+  background-color: #FFC;
+}
+
+section {
+  border-color: #BBB;
+  background-color: #EEE;
+}
+
+section > h1 {
+  border-color: #DDD;
+  background-color: #66F;
+}
+
+section > input {
+  border-color: #BBB !important;
+  color: #333;
+}
+
+section > button {
+  color: #333;
+}
+
+#callLabel,
+#putLabel {
+  border-color: #BBB;  
+}

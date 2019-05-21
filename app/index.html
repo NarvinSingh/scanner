@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Scanner</title>
-  <link rel="stylesheet" type="text/css" href="css/main.css">
-  <script src="js/main.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <link rel="stylesheet" type="text/css" href="css/color-scheme.css">
+  <script src="js/scanner.js"></script>
 </head>
 <body>
   <h1 id="header" class="redacted">Scanner</h1>
@@ -20,8 +21,22 @@
     <button id="getTokenButton" name="getToken">Get Token</button>
     <button id="refreshTokenButton" name="refreshToken">Refresh Token</button>
   </section>
-  <section id="scanSection">
-    <h1 id="scanHeader">Scan</h1>   
+  <section id="listSection">
+    <h1 id="listHeader">Watchlist</h1>
+    <label id="symbolLablel" class="redacted">Symbol</label>
+    <label id="lastLabel" class="redacted numeric">Last</label>
+    <label id="volmLable" class="redacted numeric">Volume</label>
+    <label id="strikeLable" class="redacted">Strike</label>
+    <label id="callLabel" class="redacted">Call</label>
+    <label id="callBidLabel" class="redacted numeric">Bid</label>
+    <label id="callAskLabel" class="redacted numeric">Ask</label>
+    <label id="callDeltaLabel" class="redacted numeric">Delta</label>
+    <label id="callVertExpLabel" class="redacted numeric">Vert Exp</label>
+    <label id="putLabel" class="redacted">Put</label>
+    <label id="putBidLabel" class="redacted numeric">Bid</label>
+    <label id="putAskLabel" class="redacted numeric">Ask</label>
+    <label id="putDeltaLabel" class="redacted numeric">Delta</label>
+    <label id="putVertExpLabel" class="redacted numeric">Vert Exp</label>
     <button id="scanButton" name="scan">Scan</button>
   </section>
  </body>

@@ -1,0 +1,177 @@
+body {
+  margin: 0 auto;
+  max-width: 60em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#header {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+section {
+  display: grid;
+  margin-bottom: 1em;
+  border: 1px solid;
+  grid-gap: .5em;
+  padding-bottom: .5em;
+  font-size: .7em;
+}
+
+section > h1 {
+  margin: 0;
+  padding: .2em;
+  border-bottom: 1px solid;
+  font-size: 1.2em;
+}
+
+#authorizationSection {
+  grid-template:
+    "authorizationHeader authorizationHeader authorizationHeader authorizationHeader"
+    "clientIDLabel clientIDInput clientIDInput clientIDInput"
+    "redirectURILabel redirectURIInput redirectURIInput redirectURIInput"
+    "authCodeLabel authCodeInput authCodeInput authCodeInput"
+    ". getAuthCodeButton getTokenButton refreshTokenButton"
+    / max-content auto;
+}
+
+#authorizationHeader {
+  grid-area: authorizationHeader;
+}
+
+#authorizationSection > label {
+  margin-left: .4em;
+  align-self: center;
+  font-weight: bold;
+}
+
+#authorizationSection > input {
+  margin-right: .4em;
+  border: 1px solid;
+}
+
+#clientIDLabel {
+  grid-area: clientIDLabel;
+}
+
+#clientIDInput {
+  grid-area: clientIDInput;
+}
+
+#redirectURILabel {
+  grid-area: redirectURILabel;
+}
+
+#redirectURIInput {
+  grid-area: redirectURIInput;
+}
+
+#authCodeLabel {
+  grid-area: authCodeLabel;
+}
+
+#authCodeInput {
+  grid-area: authCodeInput;
+}
+
+#getAuthCodeButton {
+  grid-area: getAuthCodeButton;
+}
+
+#getTokenButton {
+  grid-area: getTokenButton;
+}
+
+#refreshTokenButton {
+  grid-area: refreshTokenButton;
+  margin-right: .4em;
+}
+
+#listSection {
+  grid-template:
+    "listHeader listHeader listHeader listHeader listHeader listHeader listHeader listHeader listHeader listHeader listHeader listHeader"
+    "scanButton scanButton scanButton callLabel callLabel callLabel callLabel . putLabel putLabel putLabel putLabel"
+    "symbolLablel lastLabel volmLable callVertExpLabel callDeltaLabel callBidLabel callAskLabel strikeLable putBidLabel putAskLabel putDeltaLabel putVertExpLabel"
+    / auto auto auto auto auto auto auto auto auto auto auto auto;
+}
+
+#listHeader {
+  grid-area: listHeader;
+}
+
+#scanButton {
+  grid-area: scanButton;
+  margin: 0 .4em;
+}
+
+#listSection > label {
+  font-weight: bold;
+}
+
+.numeric {
+  text-align: right;
+}
+
+#symbolLablel {
+  grid-area: symbolLablel;
+  margin-left: .4em;
+}
+
+#lastLabel {
+  grid-area: lastLabel;
+}
+
+#volmLable {
+  grid-area: volmLable;
+}
+
+#strikeLable {
+  grid-area: strikeLable;
+  text-align: center;
+}
+
+#callLabel {
+  grid-area: callLabel;
+  border-bottom: 1px solid;
+  text-align: center;
+}
+
+#callBidLabel {
+  grid-area: callBidLabel;
+}
+
+#callAskLabel {
+  grid-area: callAskLabel;
+}
+
+#callDeltaLabel {
+  grid-area: callDeltaLabel;
+}
+
+#callVertExpLabel {
+  grid-area: callVertExpLabel;
+}
+
+#putLabel {
+  grid-area: putLabel;
+  margin-right: .4em;
+  border-bottom: 1px solid;
+  text-align: center;
+}
+
+#putBidLabel {
+  grid-area: putBidLabel;
+}
+
+#putAskLabel {
+  grid-area: putAskLabel;
+}
+
+#putDeltaLabel {
+  grid-area: putDeltaLabel;
+}
+
+#putVertExpLabel {
+  grid-area: putVertExpLabel;
+  margin-right: .4em;
+}
