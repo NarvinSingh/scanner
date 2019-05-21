@@ -35,7 +35,7 @@
     buttonRefreshToken = document.getElementById("refreshTokenButton");
     buttonRefreshToken.addEventListener("click", processButtonRefreshTokenClick);
 
-    buttonScan = document.getElementById("getOptionChainButton");
+    buttonScan = document.getElementById("scanButton");
     buttonScan.addEventListener("click", processButtonScanClick);
   }
 
