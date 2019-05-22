@@ -9,9 +9,7 @@
   var buttonGetToken;
   var buttonRefreshToken;
   var buttonScan;
-  var responseGetToken;
-  var responseRefreshToken;
-  var responseGetOptionChain;
+  var sectionList;
 
   function init() {
     inputClientID = document.getElementById("clientIDInput");
@@ -37,6 +35,13 @@
 
     buttonScan = document.getElementById("scanButton");
     buttonScan.addEventListener("click", processButtonScanClick);
+
+    sectionList = document.getElementById("listSection");
+
+    if (localStorage.watchlist)
+    {
+      localStorage.watchlist.split(",").forEach(loadSymbol);
+    }
   }
 
   function getAuthCodeURI() {
@@ -75,17 +80,30 @@
     console.log("refreshToken body: " + body);
   }
 
-  function getOptionChain(symbol, fromDate, toDate) {
+  function loadSymbol(symbol, index) {
+    var span = document.createElement("span");
+    span.id = "symbol" + index + "Span";
+    span.className = "symbol";
+    span.style = "grid-row:" + (index + 4) + ";";
+    span.innerHTML = symbol;
+    sectionList.appendChild(span);
+
+    getOptionChain(span, symbol, '2019-06-20', '2019-06-22');
+  }
+
+  function getOptionChain(elt, symbol, fromDate, toDate) {
     var uri = "https://api.tdameritrade.com/v1/marketdata/chains?" +
       "symbol=" + symbol +
+      "&includeQuotes=TRUE" +
       "&fromDate=" + fromDate +
       "&toDate=" + toDate;
     xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = processGetOptionChainResponse;
+    xhr.onreadystatechange = function() {
+      processGetOptionChainResponse(xhr, elt);
+    };
     xhr.open("GET", uri);
     xhr.setRequestHeader("Authorization", "Bearer " + localStorage.accessToken);
     xhr.send();
-    console.log("getOptionChain URI: " + uri);
   }
 
   function processInputClientIDInput() {
@@ -113,14 +131,14 @@
   }
 
   function processButtonScanClick() {
-    getOptionChain('SPY', '2019-06-20', '2019-06-22');
+    // getOptionChain('SPY', '2019-06-20', '2019-06-22');
   }
 
   function processGetTokenResponse() {
     if(this.readyState == 4 && this.status == 200) {
-      responseGetToken = JSON.parse(this.responseText);
-      localStorage.accessToken = responseGetToken.access_token;
-      localStorage.refreshToken = responseGetToken.refresh_token;
+      var json = JSON.parse(this.responseText);
+      localStorage.accessToken = json.access_token;
+      localStorage.refreshToken = json.refresh_token;
       console.log("processGetTokenResponse: " + this.responseText);
     } else {
       console.log("processGetTokenResponse: readyState=" + this.readyState + " status=" + this.status);
@@ -129,21 +147,22 @@
 
   function processRefreshTokenResponse() {
     if(this.readyState == 4 && this.status == 200) {
-      responseRefreshToken = JSON.parse(this.responseText);
-      localStorage.accessToken = responseRefreshToken.access_token;
-      localStorage.refreshToken = responseRefreshToken.refresh_token;
+      var json = JSON.parse(this.responseText);
+      localStorage.accessToken = json.access_token;
+      localStorage.refreshToken = json.refresh_token;
       console.log("processRefreshTokenResponse: " + this.responseText);
     } else {
       console.log("processRefreshTokenResponse: readyState=" + this.readyState + " status=" + this.status);
     }
   }
 
-  function processGetOptionChainResponse() {
-    if(this.readyState == 4 && this.status == 200) {
-      responseGetOptionChain = JSON.parse(this.responseText);
-      console.log("processGetOptionChainResponse: " + this.responseText);
+  function processGetOptionChainResponse(xhr, elt) {
+    if(xhr.readyState == 4 && xhr.status == 200) {
+      var json = JSON.parse(xhr.responseText);
+      elt.innerHTML += " got response";
+      console.log("processGetOptionChainResponse: " + xhr.responseText);
     } else {
-      console.log("processGetOptionChainResponse: readyState=" + this.readyState + " status=" + this.status);
+      console.log("processGetOptionChainResponse: readyState=" + xhr.readyState + " status=" + xhr.status);
     }
   }
 

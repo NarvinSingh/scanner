@@ -134,6 +134,7 @@ section > h1 {
   grid-area: callLabel;
   border-bottom: 1px solid;
   text-align: center;
+  align-self: center;
 }
 
 #callBidLabel {
@@ -157,6 +158,7 @@ section > h1 {
   margin-right: .4em;
   border-bottom: 1px solid;
   text-align: center;
+  align-self: center;
 }
 
 #putBidLabel {
@@ -174,4 +176,8 @@ section > h1 {
 #putVertExpLabel {
   grid-area: putVertExpLabel;
   margin-right: .4em;
+}
+
+span.symbol {
+  margin-left: .6em;
 }
