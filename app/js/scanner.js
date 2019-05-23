@@ -77,85 +77,85 @@
   }
 
   function loadSymbol(symbol, index) {
-    var rowDiv = document.createElement("div");
-    rowDiv.id = "row" + index + "Div";
-    rowDiv.className = "panelGrid listRow";
+    // var rowDiv = document.createElement("div");
+    // rowDiv.id = "row" + index + "Div";
+    // rowDiv.className = "panelGrid listRow";
 
-    var div = document.createElement("div");
-    div.id = "symbol" + index + "Div";
-    div.className = "listItem symbol";
-    div.innerHTML = symbol;
-    rowDiv.appendChild(div);
+    // var div = document.createElement("div");
+    // div.id = "symbol" + index + "Div";
+    // div.className = "listItem symbol";
+    // div.innerHTML = symbol;
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "last" + index + "Div";
-    div.className = "listItem numeric last";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "last" + index + "Div";
+    // div.className = "listItem numeric last";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "volm" + index + "Div";
-    div.className = "listItem numeric last";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "volm" + index + "Div";
+    // div.className = "listItem numeric last";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "callVertExp" + index + "Div";
-    div.className = "listItem numeric vertExp";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "callVertExp" + index + "Div";
+    // div.className = "listItem numeric vertExp";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "callDelta" + index + "Div";
-    div.className = "listItem numeric delta";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "callDelta" + index + "Div";
+    // div.className = "listItem numeric delta";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "callBid" + index + "Div";
-    div.className = "listItem numeric bid";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "callBid" + index + "Div";
+    // div.className = "listItem numeric bid";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "callAsk" + index + "Div";
-    div.className = "listItem numeric ask";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "callAsk" + index + "Div";
+    // div.className = "listItem numeric ask";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "strike" + index + "Div";
-    div.className = "listItem numeric strike";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "strike" + index + "Div";
+    // div.className = "listItem numeric strike";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "putBid" + index + "Div";
-    div.className = "listItem numeric bid";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "putBid" + index + "Div";
+    // div.className = "listItem numeric bid";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "putAsk" + index + "Div";
-    div.className = "listItem numeric ask";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "putAsk" + index + "Div";
+    // div.className = "listItem numeric ask";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "putDelta" + index + "Div";
-    div.className = "listItem numeric delta";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "putDelta" + index + "Div";
+    // div.className = "listItem numeric delta";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    div = document.createElement("div");
-    div.id = "putVertExp" + index + "Div";
-    div.className = "listItem numeric vertExp";
-    div.innerHTML = "NULL";
-    rowDiv.appendChild(div);
+    // div = document.createElement("div");
+    // div.id = "putVertExp" + index + "Div";
+    // div.className = "listItem numeric vertExp";
+    // div.innerHTML = "NULL";
+    // rowDiv.appendChild(div);
 
-    sectionList.appendChild(rowDiv);
+    // sectionList.appendChild(rowDiv);
 
-    getOptionChain(rowDiv, symbol, '2019-06-20', '2019-06-22');
+    // getOptionChain(rowDiv, symbol, '2019-06-20', '2019-06-22');
   }
 
   function getOptionChain(elt, symbol, fromDate, toDate) {

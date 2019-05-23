@@ -46,7 +46,7 @@ body {
     "redirectURILabel redirectURIInput redirectURIInput redirectURIInput"
     "authCodeLabel authCodeInput authCodeInput authCodeInput"
     ". getAuthCodeButton getTokenButton refreshTokenButton"
-    / max-content auto;
+    / max-content auto auto auto;
 }
 
 #authorizationHeader {
@@ -94,9 +94,9 @@ body {
   border-bottom: 1px solid;
   padding: 0 .5em;
   grid-template:
-    ". . . callLabel callLabel callLabel callLabel . putLabel putLabel putLabel putLabel"
-    "symbolLablel lastLabel volmLable callVertExpLabel callDeltaLabel callBidLabel callAskLabel strikeLable putBidLabel putAskLabel putDeltaLabel putVertExpLabel"
-    / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    "callLabel callLabel callLabel callLabel . putLabel putLabel putLabel putLabel"
+    "callVertExpLabel callDeltaLabel callBidLabel callAskLabel strikeLable putBidLabel putAskLabel putDeltaLabel putVertExpLabel"
+    / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 #listSection > label {
@@ -107,16 +107,8 @@ body {
   text-align: right;
 }
 
-#symbolLablel {
-  grid-area: symbolLablel;
-}
-
-#lastLabel {
-  grid-area: lastLabel;
-}
-
-#volmLable {
-  grid-area: volmLable;
+.strike {
+  text-align: center;
 }
 
 #strikeLable {
@@ -175,9 +167,64 @@ body {
   margin: 0 -.5em;
   border-bottom: 1px solid;
   padding: 0 .5em .25em .5em;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template:
+    "symbolLablel lastLabel last volmLable volm . . . ."
+    "callVertExp callDelta callBid callAsk strike putBid putAsk putDelta putVertExp"
+    / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-.strike {
-  text-align: center;
+.listRow label.symbol {
+  grid-area: symbolLablel;
+}
+
+.listRow label.last {
+  grid-area: lastLabel;
+}
+
+.listRow .listItem.last {
+  grid-area: last;
+}
+
+.listRow label.volm {
+  grid-area: volmLable;
+}
+
+.listRow .listItem.volm {
+  grid-area: volm;
+}
+
+.listRow .listItem.callVertExp {
+  grid-area: callVertExp;
+}
+
+.listRow .listItem.callDelta {
+  grid-area: callDelta;
+}
+
+.listRow .listItem.callBid {
+  grid-area: callBid;
+}
+
+.listRow .listItem.callAsk {
+  grid-area: callAsk;
+}
+
+.listRow .listItem.strike {
+  grid-area: strike;
+}
+
+.listRow .listItem.putBid {
+  grid-area: putBid;
+}
+
+.listRow .listItem.putAsk {
+  grid-area: putAsk;
+}
+
+.listRow .listItem.putDelta {
+  grid-area: putDelta;
+}
+
+.listRow .listItem.putVertExp {
+  grid-area: putVertExp;
 }
