@@ -8,7 +8,6 @@
   var buttonGetAuthCode;
   var buttonGetToken;
   var buttonRefreshToken;
-  var buttonScan;
   var sectionList;
 
   function init() {
@@ -32,9 +31,6 @@
 
     buttonRefreshToken = document.getElementById("refreshTokenButton");
     buttonRefreshToken.addEventListener("click", processButtonRefreshTokenClick);
-
-    buttonScan = document.getElementById("scanButton");
-    buttonScan.addEventListener("click", processButtonScanClick);
 
     sectionList = document.getElementById("listSection");
 
@@ -81,14 +77,85 @@
   }
 
   function loadSymbol(symbol, index) {
-    var span = document.createElement("span");
-    span.id = "symbol" + index + "Span";
-    span.className = "symbol";
-    span.style = "grid-row:" + (index + 4) + ";";
-    span.innerHTML = symbol;
-    sectionList.appendChild(span);
+    var rowDiv = document.createElement("div");
+    rowDiv.id = "row" + index + "Div";
+    rowDiv.className = "panelGrid listRow";
 
-    getOptionChain(span, symbol, '2019-06-20', '2019-06-22');
+    var div = document.createElement("div");
+    div.id = "symbol" + index + "Div";
+    div.className = "listItem symbol";
+    div.innerHTML = symbol;
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "last" + index + "Div";
+    div.className = "listItem numeric last";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "volm" + index + "Div";
+    div.className = "listItem numeric last";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "callVertExp" + index + "Div";
+    div.className = "listItem numeric vertExp";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "callDelta" + index + "Div";
+    div.className = "listItem numeric delta";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "callBid" + index + "Div";
+    div.className = "listItem numeric bid";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "callAsk" + index + "Div";
+    div.className = "listItem numeric ask";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "strike" + index + "Div";
+    div.className = "listItem numeric strike";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "putBid" + index + "Div";
+    div.className = "listItem numeric bid";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "putAsk" + index + "Div";
+    div.className = "listItem numeric ask";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "putDelta" + index + "Div";
+    div.className = "listItem numeric delta";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "putVertExp" + index + "Div";
+    div.className = "listItem numeric vertExp";
+    div.innerHTML = "NULL";
+    rowDiv.appendChild(div);
+
+    sectionList.appendChild(rowDiv);
+
+    getOptionChain(rowDiv, symbol, '2019-06-20', '2019-06-22');
   }
 
   function getOptionChain(elt, symbol, fromDate, toDate) {
@@ -97,7 +164,7 @@
       "&includeQuotes=TRUE" +
       "&fromDate=" + fromDate +
       "&toDate=" + toDate;
-    xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
       processGetOptionChainResponse(xhr, elt);
     };
@@ -130,10 +197,6 @@
     refreshToken();
   }
 
-  function processButtonScanClick() {
-    // getOptionChain('SPY', '2019-06-20', '2019-06-22');
-  }
-
   function processGetTokenResponse() {
     if(this.readyState == 4 && this.status == 200) {
       var json = JSON.parse(this.responseText);
@@ -159,8 +222,13 @@
   function processGetOptionChainResponse(xhr, elt) {
     if(xhr.readyState == 4 && xhr.status == 200) {
       var json = JSON.parse(xhr.responseText);
-      elt.innerHTML += " got response";
-      console.log("processGetOptionChainResponse: " + xhr.responseText);
+      var last = (json.underlying.last != null ? json.underlying.last : json.underlyingPrice).toLocaleString();
+      var volm = json.underlying.last != null ? json.underlying.totalVolume.toLocaleString() : "N/A";
+
+      child = elt.firstElementChild.nextElementSibling;
+      child.innerHTML = last;
+      child = child.nextElementSibling;
+      child.innerHTML = volm;
     } else {
       console.log("processGetOptionChainResponse: readyState=" + xhr.readyState + " status=" + xhr.status);
     }

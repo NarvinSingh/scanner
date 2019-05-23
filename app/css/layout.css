@@ -1,28 +1,42 @@
 body {
+  font-size: 9pt;
   margin: 0 auto;
-  max-width: 60em;
+  max-width: 80em;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 #header {
-  font-size: 1.5em;
   text-align: center;
 }
 
-section {
+.panel {
+  font-size: 1em;
   display: grid;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
   border: 1px solid;
+  padding: 0 .5em .5em .5em;
   grid-gap: .5em;
-  padding-bottom: .5em;
-  font-size: .7em;
 }
 
-section > h1 {
-  margin: 0;
-  padding: .2em;
+.panelTitle {
+  font-size: 1em;
+  margin: 0 -.5em;
+  padding: .2em .5em;
   border-bottom: 1px solid;
-  font-size: 1.2em;
+}
+
+.panelGrid {
+  display: grid;
+  grid-gap: .5em;
+}
+
+.panel label {
+  align-self: center;
+  font-weight: bold;
+}
+
+.panel input {
+  border: 1px solid;
 }
 
 #authorizationSection {
@@ -37,17 +51,6 @@ section > h1 {
 
 #authorizationHeader {
   grid-area: authorizationHeader;
-}
-
-#authorizationSection > label {
-  margin-left: .4em;
-  align-self: center;
-  font-weight: bold;
-}
-
-#authorizationSection > input {
-  margin-right: .4em;
-  border: 1px solid;
 }
 
 #clientIDLabel {
@@ -84,24 +87,16 @@ section > h1 {
 
 #refreshTokenButton {
   grid-area: refreshTokenButton;
-  margin-right: .4em;
 }
 
-#listSection {
+#listLabelsDiv {
+  margin: 0 -.5em;
+  border-bottom: 1px solid;
+  padding: 0 .5em;
   grid-template:
-    "listHeader listHeader listHeader listHeader listHeader listHeader listHeader listHeader listHeader listHeader listHeader listHeader"
-    "scanButton scanButton scanButton callLabel callLabel callLabel callLabel . putLabel putLabel putLabel putLabel"
+    ". . . callLabel callLabel callLabel callLabel . putLabel putLabel putLabel putLabel"
     "symbolLablel lastLabel volmLable callVertExpLabel callDeltaLabel callBidLabel callAskLabel strikeLable putBidLabel putAskLabel putDeltaLabel putVertExpLabel"
-    / auto auto auto auto auto auto auto auto auto auto auto auto;
-}
-
-#listHeader {
-  grid-area: listHeader;
-}
-
-#scanButton {
-  grid-area: scanButton;
-  margin: 0 .4em;
+    / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 #listSection > label {
@@ -114,7 +109,6 @@ section > h1 {
 
 #symbolLablel {
   grid-area: symbolLablel;
-  margin-left: .4em;
 }
 
 #lastLabel {
@@ -130,11 +124,15 @@ section > h1 {
   text-align: center;
 }
 
-#callLabel {
+.labelGroup {
   grid-area: callLabel;
   border-bottom: 1px solid;
   text-align: center;
   align-self: center;
+}
+
+#callLabel {
+  grid-area: callLabel;
 }
 
 #callBidLabel {
@@ -155,10 +153,6 @@ section > h1 {
 
 #putLabel {
   grid-area: putLabel;
-  margin-right: .4em;
-  border-bottom: 1px solid;
-  text-align: center;
-  align-self: center;
 }
 
 #putBidLabel {
@@ -175,9 +169,15 @@ section > h1 {
 
 #putVertExpLabel {
   grid-area: putVertExpLabel;
-  margin-right: .4em;
 }
 
-span.symbol {
-  margin-left: .6em;
+.listRow {
+  margin: 0 -.5em;
+  border-bottom: 1px solid;
+  padding: 0 .5em .25em .5em;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.strike {
+  text-align: center;
 }

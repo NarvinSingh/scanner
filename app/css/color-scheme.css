@@ -8,26 +8,30 @@ body {
   background-color: #FFC;
 }
 
-section {
+input,
+button {
+  color: #333;
+}
+
+.panel {
   border-color: #BBB;
   background-color: #EEE;
 }
 
-section > h1 {
-  border-color: #DDD;
+.panelTitle {
+  border-color: #BBB;
   background-color: #66F;
 }
 
-section > input {
-  border-color: #BBB !important;
-  color: #333;
+.panel input {
+  border-color: #BBB;
 }
 
-section > button {
-  color: #333;
+.labelGroup,
+#listLabelsDiv {
+  border-color: #BBB;
 }
 
-#callLabel,
-#putLabel {
-  border-color: #BBB;  
+.listRow {
+  border-color: #BBB;
 }

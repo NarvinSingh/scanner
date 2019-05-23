@@ -1,43 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Scanner</title>
-  <link rel="stylesheet" type="text/css" href="css/layout.css">
-  <link rel="stylesheet" type="text/css" href="css/color-scheme.css">
-  <script src="js/scanner.js"></script>
-</head>
-<body>
-  <h1 id="header" class="redacted">Scanner</h1>
-  <section id="authorizationSection">
-    <h1 id="authorizationHeader">Authorization</h1>
-    <label id="clientIDLabel" for="clientID">Client ID</label>
-    <input id="clientIDInput" class="redacted" type="text" name="clientID" />
-    <label id="redirectURILabel" for="redirectURI">Redirect URI</label>
-    <input id="redirectURIInput" class="redacted" type="text" name="redirectURI" />
-    <label id="authCodeLabel" for="authCode">Auth Code</label>
-    <input id="authCodeInput" type="text" name="authCode" />
-    <button id="getAuthCodeButton" name="getAuthCode">Get Auth Code</button>
-    <button id="getTokenButton" name="getToken">Get Token</button>
-    <button id="refreshTokenButton" name="refreshToken">Refresh Token</button>
-  </section>
-  <section id="listSection">
-    <h1 id="listHeader">Watchlist</h1>
-    <label id="symbolLablel" class="redacted">Symbol</label>
-    <label id="lastLabel" class="redacted numeric">Last</label>
-    <label id="volmLable" class="redacted numeric">Volume</label>
-    <label id="strikeLable" class="redacted">Strike</label>
-    <label id="callLabel" class="redacted">Call</label>
-    <label id="callBidLabel" class="redacted numeric">Bid</label>
-    <label id="callAskLabel" class="redacted numeric">Ask</label>
-    <label id="callDeltaLabel" class="redacted numeric">Delta</label>
-    <label id="callVertExpLabel" class="redacted numeric">Vert Exp</label>
-    <label id="putLabel" class="redacted">Put</label>
-    <label id="putBidLabel" class="redacted numeric">Bid</label>
-    <label id="putAskLabel" class="redacted numeric">Ask</label>
-    <label id="putDeltaLabel" class="redacted numeric">Delta</label>
-    <label id="putVertExpLabel" class="redacted numeric">Vert Exp</label>
-    <button id="scanButton" name="scan">Scan</button>
-  </section>
- </body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Scanner</title>
+    <link rel="stylesheet" type="text/css" href="css/layout.css">
+    <link rel="stylesheet" type="text/css" href="css/color-scheme.css">
+    <script src="js/scanner.js"></script>
+  </head>
+  <body>
+    <h1 id="header" class="redacted">Scanner</h1>
+    <section id="authorizationSection" class="panel">
+      <h1 id="authorizationHeader" class="panelTitle">Authorization</h1>
+      <label id="clientIDLabel" for="clientID">Client ID</label>
+      <input id="clientIDInput" class="redacted" type="text" name="clientID" />
+      <label id="redirectURILabel" for="redirectURI">Redirect URI</label>
+      <input id="redirectURIInput" class="redacted" type="text" name="redirectURI" />
+      <label id="authCodeLabel" for="authCode">Auth Code</label>
+      <input id="authCodeInput" type="text" name="authCode" />
+      <button id="getAuthCodeButton" name="getAuthCode">Get Auth Code</button>
+      <button id="getTokenButton" name="getToken">Get Token</button>
+      <button id="refreshTokenButton" name="refreshToken">Refresh Token</button>
+    </section>
+    <section id="listSection" class="panel">
+      <h1 id="listHeader" class="panelTitle">Watchlist</h1>
+      <div id="listLabelsDiv" class="panelGrid">
+        <label id="symbolLablel" class="redacted">Symbol</label>
+        <label id="lastLabel" class="redacted numeric">Last</label>
+        <label id="volmLable" class="redacted numeric">Volume</label>
+        <label id="strikeLable" class="redacted">Strike</label>
+        <label id="callLabel" class="redacted labelGroup">Call</label>
+        <label id="callBidLabel" class="redacted numeric">Bid</label>
+        <label id="callAskLabel" class="redacted numeric">Ask</label>
+        <label id="callDeltaLabel" class="redacted numeric">Delta</label>
+        <label id="callVertExpLabel" class="redacted numeric">Vert Exp</label>
+        <label id="putLabel" class="redacted labelGroup">Put</label>
+        <label id="putBidLabel" class="redacted numeric">Bid</label>
+        <label id="putAskLabel" class="redacted numeric">Ask</label>
+        <label id="putDeltaLabel" class="redacted numeric">Delta</label>
+        <label id="putVertExpLabel" class="redacted numeric">Vert Exp</label>
+        <!-- <button id="scanButton" name="scan">Scan</button> -->
+      </div>
+<!--       <div class="panelGrid listRow">
+        <span class="listItem symbol">SYM</span>
+        <span class="listItem numeric last">0.00</span>
+        <span class="listItem numeric volume">100,000,000</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem strike">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+      </div>
+      <div class="panelGrid listRow">
+        <span class="listItem symbol">SYM</span>
+        <span class="listItem numeric last">0.00</span>
+        <span class="listItem numeric volume">100,000,000</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem strike">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+      </div>
+      <div class="panelGrid listRow">
+        <span class="listItem symbol">SYM</span>
+        <span class="listItem numeric last">0.00</span>
+        <span class="listItem numeric volume">100,000,000</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem strike">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+        <span class="listItem numeric">NULL</span>
+      </div>
+ -->    </section>
+  </body>
 </html>
