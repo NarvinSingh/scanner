@@ -111,6 +111,18 @@ var dbgJson;
     underlyingDiv.appendChild(elt);
 
     elt = document.createElement("label");
+    elt.id = "sd" + index + "Label";
+    elt.className = "sd";
+    elt.innerHTML = "Std Dev";
+    underlyingDiv.appendChild(elt);
+
+    elt = document.createElement("div");
+    elt.id = "sdValue" + index + "Div";
+    elt.className = "sdValue";
+    elt.innerHTML = "NULL";
+    underlyingDiv.appendChild(elt);
+
+    elt = document.createElement("label");
     elt.id = "volm" + index + "Label";
     elt.className = "volm";
     elt.innerHTML = "Volume";
@@ -208,28 +220,23 @@ var dbgJson;
   function processGetOptionChainResponse(xhr, index) {
     if(xhr.readyState == 4 && xhr.status == 200) {
       var json = JSON.parse(xhr.responseText);
+      dbgJson = json;
 
       var last = (json.underlying.last != null ? json.underlying.last : json.underlyingPrice).toLocaleString();
       var volm = json.underlying.last != null ? json.underlying.totalVolume.toLocaleString() : "N/A";
-      document.getElementById("lastValue" + index + "Div").innerHTML = last;
-      document.getElementById("volmValue" + index + "Div").innerHTML = volm;
-
-      dbgJson = json;
-
-      var exp = Object.keys(json.callExpDateMap)[0];
-      var chain = json.callExpDateMap[exp];
-      exp = new Date(exp.split(":")[0] + " 00:00:00").toLocaleDateString(
-        "en-US",
-        { month: "short", day: "numeric", year: "numeric" });
-      document.getElementById("expValue" + index + "Div").innerHTML = exp;
-
-      var optionDiv = document.getElementById("option" + index + "Div");
-      var elt;
+      var expKey = Object.keys(json.callExpDateMap)[0];
+      var chain = json.callExpDateMap[expKey];
+      var dtExp = new Date(expKey.split(":")[0] + " 00:00:00");
+      var dte = (dtExp - new Date(new Date().toDateString())) / (24 * 60 * 60 * 1000);
+      var exp = dtExp.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
       var iv;
+      var sd;
       var shortStrike;
       var longStrike;
       var fShortStrike;
       var fLongStrike;
+      var optionDiv = document.getElementById("option" + index + "Div");
+      var elt;
 
       for (shortStrike in chain) {
         fShortStrike = parseFloat(shortStrike);
@@ -242,6 +249,14 @@ var dbgJson;
         }
       }
 
+      sd = (iv / 100) * Math.sqrt(dte / 365) * last;
+
+      document.getElementById("lastValue" + index + "Div").innerHTML = last;
+      document.getElementById("sdValue" + index + "Div").innerHTML = "±" + sd.toFixed(2).toLocaleString();
+      document.getElementById("volmValue" + index + "Div").innerHTML = volm;
+      document.getElementById("expValue" + index + "Div").innerHTML = exp + " (" + dte + ")";
+      console.log("iv: " + iv);
+
       for (shortStrike in chain) {
         fShortStrike = parseFloat(shortStrike);
 
@@ -252,7 +267,7 @@ var dbgJson;
             if (fLongStrike > fShortStrike && fLongStrike - fShortStrike <= 5) {
               elt = document.createElement("Div");
               elt.id = "stratValue" + index + "Div";
-              elt.className = "stratValue";
+              elt.className = "stratValue redacted";
               elt.innerHTML = "Call Credit Spread";
               optionDiv.appendChild(elt);
 
@@ -294,7 +309,6 @@ var dbgJson;
               elt.innerHTML = liq;
               optionDiv.appendChild(elt);
 
-              // var sd = iv  * Math.sqrt(dte / 365) * last;
               elt = document.createElement("Div");
               elt.id = "zDistValue" + index + "Div";
               elt.className = "numeric zDistValue";
