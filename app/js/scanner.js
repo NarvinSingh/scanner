@@ -1,3 +1,5 @@
+var dbgJson;
+
 (function () {
   var clientID = "NASAPP@AMER.OAUTHAP";
   var redirectURI = "http://localhost";
@@ -77,88 +79,72 @@
   }
 
   function loadSymbol(symbol, index) {
-    // var rowDiv = document.createElement("div");
-    // rowDiv.id = "row" + index + "Div";
-    // rowDiv.className = "panelGrid listRow";
+    if (symbol != "SPY") {
+      return;
+    }
 
-    // var div = document.createElement("div");
-    // div.id = "symbol" + index + "Div";
-    // div.className = "listItem symbol";
-    // div.innerHTML = symbol;
-    // rowDiv.appendChild(div);
+    var listRowDiv = document.createElement("div");
+    listRowDiv.id = "listRow" + index + "Div";
+    listRowDiv.className = "listRow";
 
-    // div = document.createElement("div");
-    // div.id = "last" + index + "Div";
-    // div.className = "listItem numeric last";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
+    var underlyingDiv = document.createElement("div");
+    underlyingDiv.id = "underlying" + index + "Div";
+    underlyingDiv.className = "panelGrid underlying";
+    listRowDiv.appendChild(underlyingDiv);
 
-    // div = document.createElement("div");
-    // div.id = "volm" + index + "Div";
-    // div.className = "listItem numeric last";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
+    var elt = document.createElement("label");
+    elt.id = "symbol" + index + "Label";
+    elt.className = "symbolValue";
+    elt.innerHTML = symbol;
+    underlyingDiv.appendChild(elt);
 
-    // div = document.createElement("div");
-    // div.id = "callVertExp" + index + "Div";
-    // div.className = "listItem numeric vertExp";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
+    elt = document.createElement("label");
+    elt.id = "last" + index + "Label";
+    elt.className = "last";
+    elt.innerHTML = "Last";
+    underlyingDiv.appendChild(elt);
 
-    // div = document.createElement("div");
-    // div.id = "callDelta" + index + "Div";
-    // div.className = "listItem numeric delta";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
+    elt = document.createElement("div");
+    elt.id = "lastValue" + index + "Div";
+    elt.className = "lastValue";
+    elt.innerHTML = "NULL";
+    underlyingDiv.appendChild(elt);
 
-    // div = document.createElement("div");
-    // div.id = "callBid" + index + "Div";
-    // div.className = "listItem numeric bid";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
+    elt = document.createElement("label");
+    elt.id = "volm" + index + "Label";
+    elt.className = "volm";
+    elt.innerHTML = "Volume";
+    underlyingDiv.appendChild(elt);
 
-    // div = document.createElement("div");
-    // div.id = "callAsk" + index + "Div";
-    // div.className = "listItem numeric ask";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
+    elt = document.createElement("div");
+    elt.id = "volmValue" + index + "Div";
+    elt.className = "volmValue";
+    elt.innerHTML = "NULL";
+    underlyingDiv.appendChild(elt);
 
-    // div = document.createElement("div");
-    // div.id = "strike" + index + "Div";
-    // div.className = "listItem numeric strike";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
+    elt = document.createElement("label");
+    elt.id = "exp" + index + "Label";
+    elt.className = "exp";
+    elt.innerHTML = "Expiration";
+    underlyingDiv.appendChild(elt);
 
-    // div = document.createElement("div");
-    // div.id = "putBid" + index + "Div";
-    // div.className = "listItem numeric bid";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
+    elt = document.createElement("div");
+    elt.id = "expValue" + index + "Div";
+    elt.className = "expValue";
+    elt.innerHTML = "NULL";
+    underlyingDiv.appendChild(elt);
 
-    // div = document.createElement("div");
-    // div.id = "putAsk" + index + "Div";
-    // div.className = "listItem numeric ask";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
+    optionDiv = document.createElement("div");
+    optionDiv.id = "option" + index + "Div";
+    optionDiv.className = "panelGrid option";
+    listRowDiv.appendChild(optionDiv);
 
-    // div = document.createElement("div");
-    // div.id = "putDelta" + index + "Div";
-    // div.className = "listItem numeric delta";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
+    sectionList.appendChild(listRowDiv);
 
-    // div = document.createElement("div");
-    // div.id = "putVertExp" + index + "Div";
-    // div.className = "listItem numeric vertExp";
-    // div.innerHTML = "NULL";
-    // rowDiv.appendChild(div);
-
-    // sectionList.appendChild(rowDiv);
-
-    // getOptionChain(rowDiv, symbol, '2019-06-20', '2019-06-22');
+    getOptionChain(symbol, '2019-06-20', '2019-06-22', index);
   }
 
-  function getOptionChain(elt, symbol, fromDate, toDate) {
+  function getOptionChain(symbol, fromDate, toDate, index) {
     var uri = "https://api.tdameritrade.com/v1/marketdata/chains?" +
       "symbol=" + symbol +
       "&includeQuotes=TRUE" +
@@ -166,7 +152,7 @@
       "&toDate=" + toDate;
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
-      processGetOptionChainResponse(xhr, elt);
+      processGetOptionChainResponse(xhr, index);
     };
     xhr.open("GET", uri);
     xhr.setRequestHeader("Authorization", "Bearer " + localStorage.accessToken);
@@ -219,16 +205,124 @@
     }
   }
 
-  function processGetOptionChainResponse(xhr, elt) {
+  function processGetOptionChainResponse(xhr, index) {
     if(xhr.readyState == 4 && xhr.status == 200) {
       var json = JSON.parse(xhr.responseText);
+
       var last = (json.underlying.last != null ? json.underlying.last : json.underlyingPrice).toLocaleString();
       var volm = json.underlying.last != null ? json.underlying.totalVolume.toLocaleString() : "N/A";
+      document.getElementById("lastValue" + index + "Div").innerHTML = last;
+      document.getElementById("volmValue" + index + "Div").innerHTML = volm;
 
-      child = elt.firstElementChild.nextElementSibling;
-      child.innerHTML = last;
-      child = child.nextElementSibling;
-      child.innerHTML = volm;
+      dbgJson = json;
+
+      var exp = Object.keys(json.callExpDateMap)[0];
+      var chain = json.callExpDateMap[exp];
+      exp = new Date(exp.split(":")[0] + " 00:00:00").toLocaleDateString(
+        "en-US",
+        { month: "short", day: "numeric", year: "numeric" });
+      document.getElementById("expValue" + index + "Div").innerHTML = exp;
+
+      var optionDiv = document.getElementById("option" + index + "Div");
+      var elt;
+      var iv;
+      var shortStrike;
+      var longStrike;
+      var fShortStrike;
+      var fLongStrike;
+
+      for (shortStrike in chain) {
+        fShortStrike = parseFloat(shortStrike);
+
+        if (fShortStrike <= last) {
+          iv = chain[shortStrike][0].volatility;
+        }
+        else {
+          break;
+        }
+      }
+
+      for (shortStrike in chain) {
+        fShortStrike = parseFloat(shortStrike);
+
+        if (fShortStrike > last) {
+          for (longStrike in chain) {
+            fLongStrike = parseFloat(longStrike);
+
+            if (fLongStrike > fShortStrike && fLongStrike - fShortStrike <= 5) {
+              elt = document.createElement("Div");
+              elt.id = "stratValue" + index + "Div";
+              elt.className = "stratValue";
+              elt.innerHTML = "Call Credit Spread";
+              optionDiv.appendChild(elt);
+
+              elt = document.createElement("Div");
+              elt.id = "strikeValue" + index + "Div";
+              elt.className = "text strikeValue";
+              elt.innerHTML = (Number.isInteger(fShortStrike) ? parseInt(fShortStrike) : fShortStrike.toFixed(2))
+                + "/" + (Number.isInteger(fLongStrike) ? parseInt(fLongStrike) : fLongStrike.toFixed(2));
+              optionDiv.appendChild(elt);
+
+              var width = fLongStrike - fShortStrike;
+              elt = document.createElement("Div");
+              elt.id = "widthValue" + index + "Div";
+              elt.className = "numeric widthValue";
+              elt.innerHTML = width;
+              optionDiv.appendChild(elt);
+
+              var shortBid = chain[shortStrike][0].bid;
+              var shortAsk = chain[shortStrike][0].ask;
+              var longBid = chain[longStrike][0].bid;
+              var longAsk = chain[longStrike][0].ask;
+              var shortSpread = shortAsk - shortBid;
+              var longSpread = longAsk - longBid;
+              var shortMid = (shortBid + shortAsk) / 2;
+              var longMid = (longBid + longAsk) / 2;
+              var shortOpenInt = chain[shortStrike][0].openInterest;
+              var shortVolm = chain[shortStrike][0].totalVolume;
+              var longOpenInt = chain[longStrike][0].openInterest;
+              var longVolm = chain[longStrike][0].totalVolume;
+              var liq = ((shortBid != 0 && longBid != 0
+                ? 1.01 - (((shortSpread / shortMid) + (longSpread / longMid)) / 2)
+                : 0)
+                + Math.min((shortOpenInt + longOpenInt) / 10000, 1)
+                + Math.min((shortVolm + longVolm) / 4000, 1)
+                + Math.min(Object.keys(chain).length / 40, 1)).toFixed(2);
+              elt = document.createElement("Div");
+              elt.id = "liqValue" + index + "Div";
+              elt.className = "text liqValue";
+              elt.innerHTML = liq;
+              optionDiv.appendChild(elt);
+
+              // var sd = iv  * Math.sqrt(dte / 365) * last;
+              elt = document.createElement("Div");
+              elt.id = "zDistValue" + index + "Div";
+              elt.className = "numeric zDistValue";
+              elt.innerHTML = "TBD";
+              optionDiv.appendChild(elt);
+
+              elt = document.createElement("Div");
+              elt.id = "expValue" + index + "Div";
+              elt.className = "numeric expValue";
+              elt.innerHTML = "TBD";
+              optionDiv.appendChild(elt);
+
+              var credit = shortMid - longMid;
+              elt = document.createElement("Div");
+              elt.id = "profitValue" + index + "Div";
+              elt.className = "numeric profitValue";
+              elt.innerHTML = (credit * 100).toFixed(2).toLocaleString();
+              optionDiv.appendChild(elt);
+
+              elt = document.createElement("Div");
+              elt.id = "lossValue" + index + "Div";
+              elt.className = "numeric lossValue";
+              elt.innerHTML = ((width - credit) * 100).toFixed(2).toLocaleString();
+              optionDiv.appendChild(elt);
+            }
+          }
+        }
+      }
     } else {
       console.log("processGetOptionChainResponse: readyState=" + xhr.readyState + " status=" + xhr.status);
     }

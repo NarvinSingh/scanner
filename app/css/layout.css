@@ -5,7 +5,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-#header {
+#titleHeading {
   text-align: center;
 }
 
@@ -25,11 +25,6 @@ body {
   border-bottom: 1px solid;
 }
 
-.panelGrid {
-  display: grid;
-  grid-gap: .5em;
-}
-
 .panel label {
   align-self: center;
   font-weight: bold;
@@ -39,9 +34,22 @@ body {
   border: 1px solid;
 }
 
+.panelGrid {
+  display: grid;
+  margin-left: -.5em;
+  margin-right: -.5em;
+  grid-gap: 0;
+}
+
+.panelGrid > label,
+.panelGrid > div {
+  padding-left: .5em;
+  padding-right: .5em;
+}
+
 #authorizationSection {
   grid-template:
-    "authorizationHeader authorizationHeader authorizationHeader authorizationHeader"
+    "authorizationHeading authorizationHeading authorizationHeading authorizationHeading"
     "clientIDLabel clientIDInput clientIDInput clientIDInput"
     "redirectURILabel redirectURIInput redirectURIInput redirectURIInput"
     "authCodeLabel authCodeInput authCodeInput authCodeInput"
@@ -49,8 +57,8 @@ body {
     / max-content auto auto auto;
 }
 
-#authorizationHeader {
-  grid-area: authorizationHeader;
+#authorizationHeading {
+  grid-area: authorizationHeading;
 }
 
 #clientIDLabel {
@@ -89,142 +97,80 @@ body {
   grid-area: refreshTokenButton;
 }
 
-#listLabelsDiv {
-  margin: 0 -.5em;
+#listSection {
+  grid-row-gap: 0;
+}
+
+#listHeaderDiv {
+  margin-top: .5em;
+  border-top: 1px solid;
   border-bottom: 1px solid;
-  padding: 0 .5em;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+#listHeaderDiv > label:first-child {
+  border: none;
+}
+
+#listHeaderDiv > label {
+  border-left: 1px solid;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.underlying {
+  border-bottom: 1px solid;
+  padding-top: .1em;
+  padding-bottom: .1em;
   grid-template:
-    "callLabel callLabel callLabel callLabel . putLabel putLabel putLabel putLabel"
-    "callVertExpLabel callDeltaLabel callBidLabel callAskLabel strikeLable putBidLabel putAskLabel putDeltaLabel putVertExpLabel"
-    / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    "symbolValue lastValue lastValue last volmValue volmValue volm . exp exp expValue expValue expValue . . ."
+    / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-#listSection > label {
-  font-weight: bold;
+.underlying > .symbolValue {
+  grid-area: symbolValue;
 }
 
-.numeric {
-  text-align: right;
-}
-
-.strike {
-  text-align: center;
-}
-
-#strikeLable {
-  grid-area: strikeLable;
-  text-align: center;
-}
-
-.labelGroup {
-  grid-area: callLabel;
-  border-bottom: 1px solid;
-  text-align: center;
-  align-self: center;
-}
-
-#callLabel {
-  grid-area: callLabel;
-}
-
-#callBidLabel {
-  grid-area: callBidLabel;
-}
-
-#callAskLabel {
-  grid-area: callAskLabel;
-}
-
-#callDeltaLabel {
-  grid-area: callDeltaLabel;
-}
-
-#callVertExpLabel {
-  grid-area: callVertExpLabel;
-}
-
-#putLabel {
-  grid-area: putLabel;
-}
-
-#putBidLabel {
-  grid-area: putBidLabel;
-}
-
-#putAskLabel {
-  grid-area: putAskLabel;
-}
-
-#putDeltaLabel {
-  grid-area: putDeltaLabel;
-}
-
-#putVertExpLabel {
-  grid-area: putVertExpLabel;
-}
-
-.listRow {
-  margin: 0 -.5em;
-  border-bottom: 1px solid;
-  padding: 0 .5em .25em .5em;
-  grid-template:
-    "symbolLablel lastLabel last volmLable volm . . . ."
-    "callVertExp callDelta callBid callAsk strike putBid putAsk putDelta putVertExp"
-    / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-}
-
-.listRow label.symbol {
-  grid-area: symbolLablel;
-}
-
-.listRow label.last {
-  grid-area: lastLabel;
-}
-
-.listRow .listItem.last {
+.underlying > .last {
   grid-area: last;
 }
 
-.listRow label.volm {
-  grid-area: volmLable;
+.underlying > .lastValue {
+  grid-area: lastValue;
+  text-align: right;
 }
 
-.listRow .listItem.volm {
+.underlying > .volm {
   grid-area: volm;
 }
 
-.listRow .listItem.callVertExp {
-  grid-area: callVertExp;
+.underlying > .volmValue {
+  grid-area: volmValue;
+  text-align: right;
 }
 
-.listRow .listItem.callDelta {
-  grid-area: callDelta;
+.underlying > .exp {
+  grid-area: exp;
+  text-align: right;
 }
 
-.listRow .listItem.callBid {
-  grid-area: callBid;
+.underlying > .expValue {
+  grid-area: expValue;
 }
 
-.listRow .listItem.callAsk {
-  grid-area: callAsk;
+.option {
+  border-bottom: 1px solid;
+  padding-top: .05em;
+  padding-bottom: .05em;
+  grid-template-columns: repeat(8, 1fr);
 }
 
-.listRow .listItem.strike {
-  grid-area: strike;
+.text.header,
+.text {
+  text-align: center;
 }
 
-.listRow .listItem.putBid {
-  grid-area: putBid;
-}
-
-.listRow .listItem.putAsk {
-  grid-area: putAsk;
-}
-
-.listRow .listItem.putDelta {
-  grid-area: putDelta;
-}
-
-.listRow .listItem.putVertExp {
-  grid-area: putVertExp;
+.numeric.header,
+.numeric {
+  text-align: right;
 }

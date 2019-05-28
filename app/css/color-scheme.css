@@ -1,7 +1,7 @@
 .redacted {
-/*  background-color: #CCC;
+  background-color: #CCC;
   color: #CCC;
-*/}
+}
 
 body {
   color: #333;
@@ -27,11 +27,22 @@ button {
   border-color: #BBB;
 }
 
-.labelGroup,
-#listLabelsDiv {
-  border-color: #BBB;
+#listHeaderDiv {
+  border-top-color: #CCC;
+  border-bottom-color: #333;
+  background-color: #66A;
 }
 
-.listRow {
-  border-color: #BBB;
+#listHeaderDiv > label {
+  border-color: #CCC;
+  color: #EEE;
+}
+
+.underlying {
+  border-color: #333;
+  background-color: #99F;
+}
+
+.option {
+  border-color: #CCC;
 }
