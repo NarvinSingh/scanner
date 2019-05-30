@@ -1,7 +1,17 @@
 .redacted {
-/*  background-color: #CCC;
-  color: #CCC;
-*/}
+  background-color: #CCC !important;
+  color: #CCC !important;
+}
+
+.redacted2 {
+  background-color: #99F !important;
+  color: #99F !important;
+}
+
+.redacted3 {
+  background-color: #66A !important;
+  color: #66A !important;
+}
 
 body {
   color: #333;
@@ -30,20 +40,28 @@ button {
 #listHeaderDiv {
   border-top-color: #CCC;
   border-bottom-color: #333;
-  background-color: #66A;
+  background-color: #99F;
 }
 
 #listHeaderDiv > label {
   border-color: #CCC;
-  color: #EEE;
 }
 
 .underlying {
   border-top-color: #777;
   border-bottom-color: #333;
-  background-color: #99F;
+  background-color: #66A;
+  color: #EEE;
 }
 
 .option {
   border-color: #CCC;
+}
+
+.option > .odd {
+  background-color: #EEE;
+}
+
+.option > .even {
+  background-color: #DDD;
 }

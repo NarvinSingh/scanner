@@ -99,13 +99,13 @@ var dbgJson;
 
     var elt = document.createElement("div");
     elt.id = "symbol" + index + "Div";
-    elt.className = "symbolValue";
+    elt.className = "redacted3 symbolValue";
     elt.innerHTML = symbol;
     underlyingDiv.appendChild(elt);
 
     elt = document.createElement("label");
     elt.id = "last" + index + "Label";
-    elt.className = "last";
+    elt.className = "redacted3 last";
     elt.innerHTML = "Last";
     underlyingDiv.appendChild(elt);
 
@@ -117,7 +117,7 @@ var dbgJson;
 
     elt = document.createElement("label");
     elt.id = "sd" + index + "Label";
-    elt.className = "sd";
+    elt.className = "redacted3 sd";
     elt.innerHTML = "Std Dev";
     underlyingDiv.appendChild(elt);
 
@@ -129,7 +129,7 @@ var dbgJson;
 
     elt = document.createElement("label");
     elt.id = "volm" + index + "Label";
-    elt.className = "volm";
+    elt.className = "redacted3 volm";
     elt.innerHTML = "Volume";
     underlyingDiv.appendChild(elt);
 
@@ -141,7 +141,7 @@ var dbgJson;
 
     elt = document.createElement("label");
     elt.id = "exp" + index + "Label";
-    elt.className = "exp";
+    elt.className = "redacted3 exp";
     elt.innerHTML = "Expiration";
     underlyingDiv.appendChild(elt);
 
@@ -236,129 +236,137 @@ var dbgJson;
       var dtExp = new Date(keyParts[0] + " 00:00:00");
       var dte = keyParts[1];
       var exp = dtExp.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-      var iv;
-      var sd;
+      var atmStrike = 0;
+      var atmIv;
       var shortStrike;
       var longStrike;
-      var fShortStrike;
-      var fLongStrike;
       var optionDiv = document.getElementById("option" + index + "Div");
       var elt;
-
-      // for (shortStrike in callChain) {
-      //   fShortStrike = parseFloat(shortStrike);
-
-      //   if (fShortStrike <= last) {
-      //     iv = callChain[shortStrike][0].volatility;
-      //   }
-      //   else {
-      //     break;
-      //   }
-      // }
-
-      // sd = (iv / 100) * Math.sqrt(dte / 365) * last;
+      var oddEven = "odd";
 
       document.getElementById("lastValue" + index + "Div").innerHTML = last;
-      // document.getElementById("sdValue" + index + "Div").innerHTML = "±" + sd.toFixed(2).toLocaleString();
       document.getElementById("volmValue" + index + "Div").innerHTML = volm;
       document.getElementById("expValue" + index + "Div").innerHTML = exp + " (" + dte + ")";
 
-      var atmStrike = 0;
-      var atmIv;
-
       for (shortStrike in callChain) {
-        // console.log(json.symbol + " " + shortStrike + " C " + callChain[shortStrike][0].volatility + " P " + putChain[shortStrike][0].volatility);
-        fShortStrike = parseFloat(shortStrike);
+        var fShortStrike = parseFloat(shortStrike);
+        var shortOption = callChain[shortStrike][0];
+        var shortBid = shortOption.bid;
+        var shortAsk = shortOption.ask;
+        var shortSpread = shortAsk - shortBid;
+        var shortMid = (shortBid + shortAsk) / 2;
 
-        if (fShortStrike > last) {
+        if (shortOption.bid > 0 && fShortStrike > last) {
           if (Math.abs(fShortStrike - last) < Math.abs(atmStrike - last)) {
             atmStrike = fShortStrike;
+            atmIv = (shortOption.volatility + putChain[shortStrike][0].volatility) / 2;
           }
 
-          for (longStrike in callChain) {
-            fLongStrike = parseFloat(longStrike);
+          var iSpread = 1;
 
-            if (fLongStrike > fShortStrike && fLongStrike - fShortStrike <= 5) {
+          for (longStrike in callChain) {
+            var fLongStrike = parseFloat(longStrike);
+            var longOption = callChain[longStrike][0];
+            var longBid = longOption.bid;
+            var longAsk = longOption.ask;
+            var longSpread = longAsk - longBid;
+            var longMid = (longBid + longAsk) / 2;
+            var credit = shortMid - longMid;
+
+            if (longOption.bid > 0 && credit > 0 && fLongStrike > fShortStrike && fLongStrike - fShortStrike <= 5) {
               elt = document.createElement("Div");
-              elt.id = "stratValue" + index + "Div";
-              elt.className = "stratValue redacted";
+              elt.id = "stratValue-" + index + "-" + iSpread + "-Div";
+              elt.className = oddEven + " stratValue redacted";
               elt.innerHTML = "Call Credit Spread";
               optionDiv.appendChild(elt);
 
               elt = document.createElement("Div");
-              elt.id = "strikeValue" + index + "Div";
-              elt.className = "text strikeValue";
+              elt.id = "strikeValue-" + index + "-" + iSpread + "-Div";
+              elt.className = oddEven + " text strikeValue";
               elt.innerHTML = (Number.isInteger(fShortStrike) ? parseInt(fShortStrike) : fShortStrike.toFixed(2))
                 + "/" + (Number.isInteger(fLongStrike) ? parseInt(fLongStrike) : fLongStrike.toFixed(2));
               optionDiv.appendChild(elt);
 
               var width = fLongStrike - fShortStrike;
               elt = document.createElement("Div");
-              elt.id = "widthValue" + index + "Div";
-              elt.className = "numeric widthValue";
+              elt.id = "widthValue-" + index + "-" + iSpread + "-Div";
+              elt.className = oddEven + " numeric widthValue";
               elt.innerHTML = width;
               optionDiv.appendChild(elt);
 
-              var shortOption = callChain[shortStrike][0];
-              var longOption = callChain[longStrike][0];
-              var shortBid = shortOption.bid;
-              var shortAsk = shortOption.ask;
-              var longBid = longOption.bid;
-              var longAsk = longOption.ask;
-              var shortSpread = shortAsk - shortBid;
-              var longSpread = longAsk - longBid;
-              var shortMid = (shortBid + shortAsk) / 2;
-              var longMid = (longBid + longAsk) / 2;
               var shortOpenInt = shortOption.openInterest;
               var shortVolm = shortOption.totalVolume;
               var longOpenInt = longOption.openInterest;
               var longVolm = longOption.totalVolume;
               var liq = ((shortBid != 0 && longBid != 0
-                ? Math.max(1.01 - (
-                  ((shortBid > 0 ? (shortSpread / shortMid) : 1.01)
-                  + (longBid > 0 ? (longSpread / longMid) : 1.01))
+                ? Math.max(1 - (
+                  ((shortBid > 0 ? (shortSpread / shortMid) : 1)
+                  + (longBid > 0 ? (longSpread / longMid) : 1))
                   / 2), 0)
                 : 0)
                 + Math.min((shortOpenInt + longOpenInt) / 10000, 1)
                 + Math.min((shortVolm + longVolm) / 4000, 1)
                 + Math.min(Object.keys(callChain).length / 40, 1)).toFixed(2);
               elt = document.createElement("Div");
-              elt.id = "liqValue" + index + "Div";
-              elt.className = "text liqValue";
+              elt.id = "liqValue-" + index + "-" + iSpread + "-Div";
+              elt.className = oddEven + " text liqValue";
               elt.innerHTML = liq;
+              optionDiv.appendChild(elt);
+
+              var pct = (fShortStrike - last) / last;
+              elt = document.createElement("Div");
+              elt.id = "pctDistValue-" + index + "-" + iSpread + "-Div";
+              elt.className = oddEven + " numeric pctDistValue";
+              elt.innerHTML = (pct * 100).toFixed(2) + "%";
               optionDiv.appendChild(elt);
 
               var iv = shortOption.volatility;
               var sd = (iv / 100) * Math.sqrt(dte / 365) * last;
-              console.log(shortStrike + " " + iv + " " + sd);
+              var z = (fShortStrike - last) / sd;
               elt = document.createElement("Div");
-              elt.id = "zDistValue" + index + "Div";
-              elt.className = "numeric zDistValue";
-              elt.innerHTML = ((fShortStrike - last) / sd).toFixed(2);
+              elt.id = "zDistValue-" + index + "-" + iSpread + "-Div";
+              elt.className = oddEven + " numeric zDistValue";
+              elt.innerHTML = z.toFixed(2);
+              optionDiv.appendChild(elt);
+
+              var probItm = getCumStdNorm(z);
+              elt = document.createElement("Div");
+              elt.id = "probItmValue-" + index + "-" + iSpread + "-Div";
+              elt.className = oddEven + " numeric probItm";
+              elt.innerHTML = (probItm * 100).toFixed(2) + "%";
+              optionDiv.appendChild(elt);
+
+              var expVal = credit - (width * probItm);
+              elt = document.createElement("Div");
+              elt.id = "expValue-" + index + "-" + iSpread + "-Div";
+              elt.className = oddEven + " numeric expValue";
+              elt.innerHTML = (expVal * 100).toFixed(2);
               optionDiv.appendChild(elt);
 
               elt = document.createElement("Div");
-              elt.id = "expValue" + index + "Div";
-              elt.className = "numeric expValue";
-              elt.innerHTML = "TBD";
-              optionDiv.appendChild(elt);
-
-              var credit = shortMid - longMid;
-              elt = document.createElement("Div");
-              elt.id = "profitValue" + index + "Div";
-              elt.className = "numeric profitValue";
+              elt.id = "profitValue-" + index + "-" + iSpread + "-Div";
+              elt.className = oddEven + " numeric profitValue";
               elt.innerHTML = (credit * 100).toFixed(2).toLocaleString();
               optionDiv.appendChild(elt);
 
+              var risk = width - credit;
               elt = document.createElement("Div");
-              elt.id = "lossValue" + index + "Div";
-              elt.className = "numeric lossValue";
-              elt.innerHTML = ((width - credit) * 100).toFixed(2).toLocaleString();
+              elt.id = "lossValue-" + index + "-" + iSpread + "-Div";
+              elt.className = oddEven + " numeric lossValue";
+              elt.innerHTML = (risk * 100).toFixed(2).toLocaleString();
               optionDiv.appendChild(elt);
+
+              iSpread++;
             }
           }
+
+          oddEven = oddEven === "odd" ? "even" : "odd";
         }
       }
+
+      sd = (atmIv / 100) * Math.sqrt(dte / 365) * last;
+      document.getElementById("sdValue" + index + "Div").innerHTML = "±" + sd.toFixed(2).toLocaleString();
+      console.log("ATM Strike: " + atmStrike + " ATM IV: " + atmIv);
     } else {
       console.log("processGetOptionChainResponse: readyState=" + xhr.readyState + " status=" + xhr.status);
     }
