@@ -1,7 +1,7 @@
 .redacted {
-  background-color: #CCC;
+/*  background-color: #CCC;
   color: #CCC;
-}
+*/}
 
 body {
   color: #333;
@@ -39,7 +39,8 @@ button {
 }
 
 .underlying {
-  border-color: #333;
+  border-top-color: #777;
+  border-bottom-color: #333;
   background-color: #99F;
 }
 

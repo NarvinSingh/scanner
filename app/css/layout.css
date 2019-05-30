@@ -119,12 +119,17 @@ body {
 }
 
 .underlying {
+  border-top: 1px solid;
   border-bottom: 1px solid;
   padding-top: .1em;
   padding-bottom: .1em;
   grid-template:
     "symbolValue lastValue lastValue last sdValue sdValue sd sd volmValue volmValue volm . exp exp expValue expValue"
     / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.underlying > div {
+  font-weight: bold;
 }
 
 .underlying > .symbolValue {
